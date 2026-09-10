@@ -3,6 +3,7 @@ st.title("Mining Health, Safety and Equipment Monitoring Application")
 st.write("Welcome to the Application")
 st.success("Streamlit is working")
 #Login portal
+import streamlit as st
 users = { "admin": {"password": "admin123", "role": "Administrator"},
          "safety": {"password": "safety123", "role": "Safety Officer"},
          "mining": {"password": "mining123", "role": "Mining Engineer"},
