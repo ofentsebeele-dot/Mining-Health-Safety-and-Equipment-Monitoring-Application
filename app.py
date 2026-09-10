@@ -6,14 +6,25 @@ users = { "admin": {"password": "admin123", "role": "Administrator"},
          "manager": {"password": "manager123", "role": "Manager" }}
 st.title("Mining Health, Safety and Equipment Monitoring Application")
 st.subheader("Login")
+
 username = st.text_input("enter your username:")
 password = st.text_input("enter your password:")
-if st.username in users:
-    if password == users[username]["password"]:
-        role = users[username]["role"]
-        print("Login Successful")
-        print("Role",role)
+
+if st.button("Login"):
+
+    if username in users:
+
+        if password == users[username]["password"]:
+
+            role = users[username]["role"]
+
+            st.success("Login Successful!")
+            st.write("Welcome,", username)
+            st.write("Role:", role)
+
+        else:
+            st.error("Incorrect Password")
+
     else:
-        st.error("Incorrect Password")
-else:
-    st.error("Username not found")
+        st.error("Username not found")
+
