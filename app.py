@@ -1,7 +1,3 @@
-import streamlit as st
-st.title("Mining Health, Safety and Equipment Monitoring Application")
-st.write("Welcome to the Application")
-st.success("Streamlit is working")
 #Login portal
 import streamlit as st
 users = { "admin": {"password": "admin123", "role": "Administrator"},
