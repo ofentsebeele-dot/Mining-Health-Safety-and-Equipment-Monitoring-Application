@@ -1,7 +1,7 @@
 # Login portal
 import streamlit as st
 from worker_health import render_worker_health_page
-from incidents import render_Incidents_page
+from Incidents import render_incidents_page
 
 # Preserve group members' exact user and permission dictionaries
 users = {
@@ -109,7 +109,7 @@ def main_dashboard():
 
     elif selected_page == "Safety incidents":
         # Calls your Incidents.py page function
-        render_Incidents_page()
+        render_incidents_page()
 
     elif selected_page == "Equipment data":
         st.title("⚙️ Equipment Data")
