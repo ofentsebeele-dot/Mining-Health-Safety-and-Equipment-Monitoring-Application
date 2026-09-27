@@ -1,9 +1,8 @@
 import streamlit as st
 import pandas as pd
-from datetime import datetime
 
 
-def render_Incidents_page():
+def render_incidents_page():
 
     st.title("🚨 Safety Incident Management")
 
@@ -11,6 +10,9 @@ def render_Incidents_page():
         "Record, monitor and analyse safety incidents occurring within the mine."
     )
 
+    # ==========================================================
+    # 1. INITIALISE INCIDENT DATA
+    # ==========================================================
 
     if "incident_data" not in st.session_state:
 
@@ -32,9 +34,17 @@ def render_Incidents_page():
             }
         ])
 
+    # ==========================================================
+    # 2. GET CURRENT INCIDENT DATA
+    # ==========================================================
+
     df = st.session_state.incident_data
 
+    # ==========================================================
+    # 3. KPI SUMMARY
+    # ==========================================================
 
+    st.subheader("📊 Incident Summary")
 
     col1, col2, col3, col4 = st.columns(4)
 
@@ -60,13 +70,25 @@ def render_Incidents_page():
 
     st.divider()
 
+    # ==========================================================
+    # 4. RECORD NEW INCIDENT
+    # ==========================================================
 
+    with st.expander(
+        "➕ Record New Safety Incident",
+        expanded=True
+    ):
 
-    with st.expander("➕ Record New Safety Incident", expanded=True):
-
-        with st.form("incident_form", clear_on_submit=True):
+        with st.form(
+            "incident_form",
+            clear_on_submit=True
+        ):
 
             col1, col2, col3 = st.columns(3)
+
+            # --------------------------------------------------
+            # COLUMN 1
+            # --------------------------------------------------
 
             with col1:
 
@@ -85,13 +107,20 @@ def render_Incidents_page():
 
                 shift = st.selectbox(
                     "Shift",
-                    ["Day", "Night"]
+                    [
+                        "Day",
+                        "Night"
+                    ]
                 )
 
                 location = st.text_input(
                     "Location",
                     placeholder="e.g. Underground Section A"
                 )
+
+            # --------------------------------------------------
+            # COLUMN 2
+            # --------------------------------------------------
 
             with col2:
 
@@ -130,13 +159,23 @@ def render_Incidents_page():
 
                 injury = st.selectbox(
                     "Injury Occurred?",
-                    ["No", "Yes"]
+                    [
+                        "No",
+                        "Yes"
+                    ]
                 )
 
                 lti = st.selectbox(
                     "Lost Time Injury (LTI)?",
-                    ["No", "Yes"]
+                    [
+                        "No",
+                        "Yes"
+                    ]
                 )
+
+            # --------------------------------------------------
+            # COLUMN 3
+            # --------------------------------------------------
 
             with col3:
 
@@ -160,17 +199,29 @@ def render_Incidents_page():
                     ]
                 )
 
+            # --------------------------------------------------
+            # SUBMIT BUTTON
+            # --------------------------------------------------
+
             submit_incident = st.form_submit_button(
                 "Submit Incident"
             )
 
+            # ==================================================
+            # 5. VALIDATE AND SAVE INCIDENT
+            # ==================================================
+
             if submit_incident:
 
                 if incident_id == "":
-                    st.error("Please provide an Incident ID.")
+                    st.error(
+                        "Please provide an Incident ID."
+                    )
 
                 elif location == "":
-                    st.error("Please provide the incident location.")
+                    st.error(
+                        "Please provide the incident location."
+                    )
 
                 else:
 
@@ -202,17 +253,24 @@ def render_Incidents_page():
                         f"Incident {incident_id} recorded successfully."
                     )
 
-                    # Safety warning
-                    if severity in ["High", "Critical"]:
+                    # ==================================================
+                    # 6. SAFETY ALERT FOR HIGH/CRITICAL INCIDENTS
+                    # ==================================================
+
+                    if severity in [
+                        "High",
+                        "Critical"
+                    ]:
 
                         st.warning(
-                            f"⚠️ SAFETY ALERT: "
-                            f"Incident {incident_id} has been classified as "
+                            f"⚠️ SAFETY ALERT: Incident "
+                            f"{incident_id} has been classified as "
                             f"{severity} severity."
                         )
 
-
-
+    # ==========================================================
+    # 7. INCIDENT RECORDS
+    # ==========================================================
 
     st.subheader("📋 Incident Records")
 
@@ -221,25 +279,58 @@ def render_Incidents_page():
         use_container_width=True
     )
 
-    # -----------------------------------
-    # Filtering
-    # -----------------------------------
+    # ==========================================================
+    # 8. FILTER INCIDENTS
+    # ==========================================================
 
     st.subheader("🔎 Filter Incidents")
 
     filter_department = st.multiselect(
         "Department",
-        options=st.session_state.incident_data["Department"].unique(),
-        default=st.session_state.incident_data["Department"].unique()
+        options=st.session_state.incident_data[
+            "Department"
+        ].unique(),
+        default=st.session_state.incident_data[
+            "Department"
+        ].unique()
     )
 
     filtered_incidents = st.session_state.incident_data[
-        st.session_state.incident_data["Department"].isin(
-            filter_department
-        )
+        st.session_state.incident_data[
+            "Department"
+        ].isin(filter_department)
     ]
 
     st.dataframe(
         filtered_incidents,
         use_container_width=True
     )
+
+    # ==========================================================
+    # 9. HIGH AND CRITICAL INCIDENT ALERTS
+    # ==========================================================
+
+    high_risk_incidents = filtered_incidents[
+        filtered_incidents["Severity"].isin(
+            [
+                "High",
+                "Critical"
+            ]
+        )
+    ]
+
+    if not high_risk_incidents.empty:
+
+        st.subheader(
+            "🚨 High and Critical Incident Alerts"
+        )
+
+        for _, row in high_risk_incidents.iterrows():
+
+            st.error(
+                f"Incident **{row['Incident ID']}** | "
+                f"Severity: **{row['Severity']}** | "
+                f"Department: {row['Department']} | "
+                f"Location: {row['Location']} | "
+                f"Status: {row['Status']}"
+            )
