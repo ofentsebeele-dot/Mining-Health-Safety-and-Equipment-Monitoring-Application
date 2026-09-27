@@ -1,6 +1,7 @@
 # Login portal
 import streamlit as st
 from worker_health import render_worker_health_page
+from incidents import render_Incidents_page
 
 # Preserve group members' exact user and permission dictionaries
 users = {
