@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 
 
-def render_incidents_page():
+def render_Incidents_page():
 
     st.title("🚨 Safety Incident Management")
 
