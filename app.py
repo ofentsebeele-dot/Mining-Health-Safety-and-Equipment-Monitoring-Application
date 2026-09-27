@@ -108,8 +108,8 @@ def main_dashboard():
         render_worker_health_page()
 
     elif selected_page == "Safety incidents":
-        st.title("🚨 Safety Incidents")
-        st.info("Safety incident tracking module.")
+        # Calls your Incidents.py page function
+        render_Incidents_page()
 
     elif selected_page == "Equipment data":
         st.title("⚙️ Equipment Data")
