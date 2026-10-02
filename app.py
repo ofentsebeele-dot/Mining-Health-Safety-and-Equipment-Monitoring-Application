@@ -5,7 +5,7 @@ from Incidents import render_incidents_page
 
 # Preserve group members' exact user and permission dictionaries
 users = {
-    "admin": {"password": "admin123", "role": "Administrator"},
+    "admin": {"password": "admin123", "role": "Administrator"}, 
     "safety": {"password": "safety123", "role": "Safety Officer"},
     "mining": {"password": "mining123", "role": "Mining Engineer"},
     "maintenance": {"password": "maintenance123", "role": "Maintenance Engineer"},
