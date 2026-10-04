@@ -58,15 +58,21 @@ permissions = {
 }
 
 # Session state management for login status
+
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
+if "username" not in st.session_state:
+    st.session_state.username = None
 if "role" not in st.session_state:
     st.session_state.role = None
 
 
 def login_screen():
     st.title("Mining Health, Safety and Equipment Monitoring Application")
-    st.subheader("Login")
+    st.subheader("User Login")
+    st.write("Please enter your login credentials to access "
+        "the mining monitoring system.")
+    with st.form("login_form"):
 
     username = st.text_input("Enter your username:")
     password = st.text_input("Enter your password:", type="password")
@@ -86,6 +92,7 @@ def login_screen():
 
 def main_dashboard():
     role = st.session_state.role
+    username = st.session_state.username
 
     # Sidebar containing your team's exact permission features as dynamic choices
     st.sidebar.title("📌 Main Menu")
