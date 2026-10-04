@@ -92,7 +92,6 @@ def login_screen():
 
 def main_dashboard():
     role = st.session_state.role
-    username = st.session_state.username
 
     # Sidebar containing your team's exact permission features as dynamic choices
     st.sidebar.title("📌 Main Menu")
