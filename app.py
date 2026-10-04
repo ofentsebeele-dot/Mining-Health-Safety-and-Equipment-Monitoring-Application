@@ -70,7 +70,6 @@ def login_screen():
     st.subheader("User Login")
     st.write("Please enter your login credentials to access "
         "the mining monitoring system.")
-    with st.form("login_form"):
 
     username = st.text_input("Enter your username:")
     password = st.text_input("Enter your password:", type="password")
