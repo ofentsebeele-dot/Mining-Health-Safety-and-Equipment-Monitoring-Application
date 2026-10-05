@@ -1,3 +1,4 @@
+from risk_assessment import render_risk_assessment_page
 # Login portal
 import streamlit as st
 from worker_health import render_worker_health_page
@@ -123,8 +124,7 @@ def main_dashboard():
         st.info("Maintenance scheduling and logs.")
 
     elif selected_page == "Risk assessment":
-        st.title("⚠️ Risk Assessment")
-        st.info("Risk matrix and evaluation tool.")
+        render_risk_assessment_page()
 
     elif selected_page == "Generate reports":
         st.title("📄 Generate Reports")
