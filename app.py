@@ -1,6 +1,6 @@
 from risk_assessment import render_risk_assessment_page
 # Login portal
-import streamlit as st
+import streamlit as st 
 from worker_health import render_worker_health_page
 from Incidents import render_incidents_page
 from Equipment import render_equipment_page
